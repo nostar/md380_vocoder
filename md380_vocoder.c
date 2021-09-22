@@ -1,5 +1,5 @@
 /* 
-* 	Copyright (C) 2020 by Doug McLain AD8DP
+* 	Copyright (C) 2020-2021 by Doug McLain AD8DP
 * 	
 * 	Based on code from https://github.com/travisgoodspeed/md380tools
 *
@@ -20,6 +20,7 @@
 
 #include <string.h>
 #include <inttypes.h>
+#include <sys/mman.h>
 
 int ambe_decode_wav(int16_t *wavbuf,int eighty,int16_t *bitbuf,int a4,int16_t a5,int16_t a6,int a7);
 int ambe_encode_thing(int16_t *bitbuf,int a2,int16_t *wavbuf,int eighty,int,int16_t a6,int16_t a7,int);                     
@@ -29,6 +30,11 @@ extern int ambe_outbuffer, wav_inbuffer0, wav_inbuffer1, ambe_en_mystery;
 int ambe_encode_thing2(int16_t *bitbuf,int a2,int16_t *wavbuf,int eighty,int a5,int16_t a6,int16_t a7,uint32_t a8){
     ambe_encode_thing(bitbuf,a2,wavbuf, eighty, a5,a6,a7,a8);
     return 0;
+}
+
+int md380_init()
+{
+	return mprotect((void*)0x800c000, 0xf2c00, PROT_EXEC);
 }
 
 void md380_encode(uint8_t *ambe49, int16_t *pcm)

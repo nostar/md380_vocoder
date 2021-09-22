@@ -1,5 +1,5 @@
 /* 
-* 	Copyright (C) 2020 by Doug McLain AD8DP
+* 	Copyright (C) 2020-2021 by Doug McLain AD8DP
 * 
 * 	Based on code from https://github.com/travisgoodspeed/md380tools
 *
@@ -24,8 +24,9 @@ extern "C" {
 #endif
 #include <inttypes.h>
 
-void md380_decode(uint8_t *, int16_t *);
-void md380_encode(uint8_t *, int16_t *);
+int md380_init();
+void md380_decode(uint8_t *ambe49, int16_t *pcm); // reads 49 bits (packed into 7 uint8_t elements in MSB order) of AMBE+2 from ambe49, writes 160 int16_t elements to pcm, 
+void md380_encode(uint8_t *ambe49, int16_t *pcm); // reads 160 int16_t elements from pcm, writes 49 bits (packed into 7 uint8_t elements in MSB order) of AMBE+2 to ambe49.
                       
 #ifdef __cplusplus
 }
